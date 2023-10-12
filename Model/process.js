@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         totalApprovals: {
             type: DataTypes.INTEGER,
         },
+        isApproved: {
+            type: DataTypes.BOOLEAN,
+        },
 
     }, { timestamps: true })
 

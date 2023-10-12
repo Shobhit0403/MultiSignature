@@ -54,3 +54,24 @@ const createProcess = async (req, res) => {
         res.status(500).json({ error: error });
     }
 };
+
+const updateTotalApprovals = async (processId) => {
+    try {
+        const [updatedRows] = await Process.update(
+            {
+                totalApprovals: sequelize.literal('totalApprovals + 1'),
+                isApproval: sequelize.literal('totalApprovals + 1 >= 5')
+            },
+            { where: { id: processId } }
+        );
+
+        return updatedRows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+
+module.exports = {
+    updateTotalApprovals,
+};
