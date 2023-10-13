@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         },
         userId: { //one - one relationship with users
-            type: DataTypes.STRING
+            type: DataTypes.INTEGER
         },
         processId: { // many to one relationship with process
             type: DataTypes.INTEGER
@@ -17,5 +17,5 @@ module.exports = (sequelize, DataTypes) => {
 
     }, { timestamps: true })
 
-    return Process;
+    return Comment;
 }

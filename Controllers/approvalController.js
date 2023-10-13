@@ -1,4 +1,4 @@
-const db = require("../Models/index");
+const db = require("../Model/index");
 const { updateTotalApprovals } = require('./approvalController')
 
 const Approval = db.approval;
@@ -66,4 +66,7 @@ const uploadPhoto = async (req, res) => {
 
 module.exports = {
     createApproval,
+    approveProcess,
+    uploadPhoto
+
 };

@@ -1,4 +1,4 @@
-const db = require("../Models/index");
+const db = require("../Model/index");
 const jwt = require("jsonwebtoken");
 const bcryprt = require("bcrypt");
 const { Op } = require('sequelize');
@@ -48,10 +48,10 @@ const createProcess = async (req, res) => {
             createApproval(processId, selectedUsers[i], false);
             sendEmail(finalSelectedUses.get(creatorId).email, finalSelectedUses.get(selectedUsers[i]).email)
         }
-        res.status(200).json(createProcess);
+        return res.status(200).json(createProcess);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: error });
+        return res.status(500).json({ error: error });
     }
 };
 
@@ -73,5 +73,6 @@ const updateTotalApprovals = async (processId) => {
 
 
 module.exports = {
+    createProcess,
     updateTotalApprovals,
 };

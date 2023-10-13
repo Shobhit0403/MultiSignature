@@ -1,5 +1,5 @@
 const express = require("express");
-const db = require("../Models");
+const db = require("../Model/index");
 const User = db.users;
 
 

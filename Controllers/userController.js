@@ -1,4 +1,4 @@
-const db = require("../Models");
+const db = require("../Model/index.js");
 const jwt = require("jsonwebtoken");
 const bcryprt = require("bcrypt");
 const { Op } = require('sequelize');
@@ -69,7 +69,7 @@ const login = async (req, res) => {
                 console.log("user", JSON.stringify(user, null, 2));
                 console.log(token);
                 //send user data
-                return res.status(201).send(user);
+                return res.status(200).send(user);
             } else {
                 return res.status(401).send("Authentication failed");
             }
@@ -89,7 +89,7 @@ const allUserDetails = async (req, res) => {
     try {
         const users = await User.findAll();
 
-        res.json(users);
+        return res.status(200).json(users);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error' });
@@ -123,7 +123,7 @@ const userDetails = async (userIds) => {
         return userDetailsMap;
     } catch (error) {
         console.error(error);
-        throw new Error(error);
+        // throw new Error(error);
     }
 };
 
