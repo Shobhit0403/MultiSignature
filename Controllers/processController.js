@@ -45,9 +45,9 @@ const createProcess = async (req, res) => {
         const processId = createdProcess.id;
         const userDetailsMap = userDetails(finalSelectedUses);
         //Create approvals for each of the user and send mail
-        let n = Math.min(5, selectedUsers.length);
+        // let n = Math.min(5, selectedUsers.length);
 
-        for (let i = 0; i < n; i++) {
+        for (let i = 0; i < 5; i++) {
             if (!selectedUsers[i]) {
                 return res.status(400).send("Less than 5 users are selected");
             }
