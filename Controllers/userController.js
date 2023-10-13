@@ -1,6 +1,6 @@
 const db = require("../Model/index.js");
 const jwt = require("jsonwebtoken");
-const bcryprt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const { Op } = require('sequelize');
 
 
@@ -17,10 +17,11 @@ const User = db.users;
 
 const signup = async (req, res) => {
     try {
-        const { userName, email, password } = req.body;
+        const { userName, email, phone, password } = req.body;
         const data = {
             userName,
             email,
+            phone,
             password: await bcrypt.hash(password, 10),
         };
         const user = await User.create(data);
@@ -46,7 +47,7 @@ const signup = async (req, res) => {
 //login authentication
 const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, phone, password } = req.body;
 
         const user = await User.findOne({
             where: {

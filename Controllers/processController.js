@@ -4,7 +4,7 @@ const bcryprt = require("bcrypt");
 const { Op } = require('sequelize');
 const { sendEmail } = require('./emailServiceController')
 const { createApproval } = require('./approvalController')
-const { userDetails } = require('./approvalController')
+const { userDetails } = require('./userController')
 
 
 
@@ -33,6 +33,7 @@ const createProcess = async (req, res) => {
             processName: processName,
             processUserId: creatorId,
             totalApprovals: 0,
+            isApproved: false,
         });
 
 
@@ -40,13 +41,19 @@ const createProcess = async (req, res) => {
             //Do we need to throw error from BE
             console.log("More than 5 users are Selected");
         }
-        const finalSelectedUses = selectedUsers.add(creatorId);
+        const finalSelectedUses = selectedUsers.push(creatorId);
         const processId = createdProcess.id;
         const userDetailsMap = userDetails(finalSelectedUses);
-        //Create approvals for each of the user and send mail 
-        for (let i = 0; i < 5; i++) {
+        //Create approvals for each of the user and send mail
+        let n = Math.min(5, selectedUsers.length);
+
+        for (let i = 0; i < n; i++) {
+            if (!selectedUsers[i]) {
+                return res.status(400).send("Less than 5 users are selected");
+            }
             createApproval(processId, selectedUsers[i], false);
-            sendEmail(finalSelectedUses.get(creatorId).email, finalSelectedUses.get(selectedUsers[i]).email)
+            // sendEmail(userDetailsMap.get(creatorId).email, userDetailsMap.get(selectedUsers[i]).email)
+            console.log(`Email sent to: ${selectedUsers[i]}`);
         }
         return res.status(200).json(createProcess);
     } catch (error) {
